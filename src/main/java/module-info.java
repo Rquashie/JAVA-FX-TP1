@@ -10,6 +10,7 @@ module appli.todolistfx {
     requires org.kordamp.bootstrapfx.core;
     requires eu.hansolo.tilesfx;
     requires com.almasb.fxgl.all;
+    requires java.sql;
 
     opens appli to javafx.fxml;
     exports appli;

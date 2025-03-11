@@ -24,6 +24,7 @@
          </font>
    </Label>
    <PasswordField id="passwordField" fx:id="passwordField" prefHeight="69.0" prefWidth="427.0" />
+   <Label fx:id="erreurLabel" onDragDetected="#verifConnexion" text="Label" textFill="#d21010" />
 
     <Label />
     <Button fx:id="logButton" onAction="#verifConnexion" text="Connexion" />

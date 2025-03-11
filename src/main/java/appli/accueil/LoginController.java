@@ -4,6 +4,7 @@ import appli.StartApplication;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -25,6 +26,13 @@ public class LoginController {
     private Button mdpOublieButton;
     @FXML
     private Button redirectionInscriptionButton;
+    @FXML
+    private Label erreurLabel;
+    @FXML
+    private Label passwordLabel;
+    @FXML
+    private Label emailLabel;
+
 
     @FXML
     void verifConnexion(ActionEvent event) {
@@ -33,11 +41,12 @@ public class LoginController {
         String mdp = passwordField.getText();
 
         if (email.isEmpty() || mdp.isEmpty()) {
-            System.out.println("Veuillez remplir les champs");
+            erreurLabel.setText("Erreur : Veuillez remplir les champs\"");
         } else if (mdp.equals("Azerty1234") && email.equals("r.quashie@lprs.fr")) {
             System.out.println("Connexion réussi");
         }
     }
+
     @FXML
     void mdpOublie(ActionEvent event) {
         System.out.println("Mot de passe oublié");
@@ -50,11 +59,14 @@ public class LoginController {
     @FXML
     void initialize() {
         assert emailField != null : "fx:id=\"emailField\" was not injected: check your FXML file 'LoginView.fxml'.";
-        assert inscriptionButton != null : "fx:id=\"inscriptionButton\" was not injected: check your FXML file 'LoginView.fxml'.";
+        assert emailLabel != null : "fx:id=\"emailLabel\" was not injected: check your FXML file 'LoginView.fxml'.";
+        assert erreurLabel != null : "fx:id=\"erreurLabel\" was not injected: check your FXML file 'LoginView.fxml'.";
         assert logButton != null : "fx:id=\"logButton\" was not injected: check your FXML file 'LoginView.fxml'.";
         assert mdpOublieButton != null : "fx:id=\"mdpOublieButton\" was not injected: check your FXML file 'LoginView.fxml'.";
         assert passwordField != null : "fx:id=\"passwordField\" was not injected: check your FXML file 'LoginView.fxml'.";
+        assert passwordLabel != null : "fx:id=\"passwordLabel\" was not injected: check your FXML file 'LoginView.fxml'.";
         assert redirectionInscriptionButton != null : "fx:id=\"redirectionInscriptionButton\" was not injected: check your FXML file 'LoginView.fxml'.";
+
     }
 
     }
