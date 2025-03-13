@@ -1,25 +1,27 @@
 package appli.accueil;
-
+import javafx.scene.control.*;
+import model.Utilisateur ;
+import database.Database ;
+import repository.UtilisateurRepository;
 import appli.StartApplication;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
+import static java.lang.Long.toHexString;
 
 public class InscriptionController {
-    Button redirectionConnexionButton;
-    public Button inscriptionButton;
-    public Label nomLabel;
-    public Label prenomLabel;
-    public Label emailLabel;
-    public Label mdpLabel;
-    public Label confirmerLabel;
-    @FXML
+@FXML
+Button redirectionConnexionButton;
+public Button inscriptionButton;
+public Label nomLabel;
+public Label prenomLabel;
+public Label emailLabel;
+public Label mdpLabel;
+public Label confirmerLabel;
+@FXML
 private TextField nomField ;
 @FXML
 private TextField prenomField ;
@@ -29,13 +31,42 @@ private TextField emailField ;
 private PasswordField mdpField ;
 @FXML
 private PasswordField confirmerMdpField ;
-
+@FXML
+private CheckBox adminField;
+@FXML
+private CheckBox utilisateurField;
+@FXML
+private Label erreurInscription;
 
 @FXML
-public void gestionInscription(ActionEvent actionEvent) {
-    System.out.println("Nom : "+nomField.getText());
-    System.out.println("Prenom : "+prenomField.getText());
-    System.out.println("Email : "+emailField.getText());
+UtilisateurRepository repo = new UtilisateurRepository();
+
+@FXML
+public void gestionInscription(ActionEvent actionEvent) throws IOException, SQLException {
+    String mdp = String.valueOf(mdpField.hashCode() );
+    if(adminField.isSelected()) {
+        Utilisateur utilisateur = new Utilisateur(nomField.getText(), prenomField.getText(), emailField.getText(), mdp, "amin");
+        if (!repo.getTousLesUtilisateurs().contains(utilisateur)) {
+            repo.ajouterUtilisateur(utilisateur);
+            StartApplication.changeScene("Login");
+        }
+        else{
+            erreurInscription.setText("Utilisateur déja inscrit");
+        }
+    }
+   else if(utilisateurField.isSelected()) {
+        Utilisateur utilisateur = new Utilisateur(nomField.getText(), prenomField.getText(), emailField.getText(), mdp, "utilisateur");
+        if (!repo.getTousLesUtilisateurs().contains(utilisateur)) {
+            repo.ajouterUtilisateur(utilisateur);
+        }
+        else{
+            erreurInscription.setText("Utilisateur déja inscrit");
+        }
+    }
+   else{
+       System.out.println("Veuillez choisir un bouton");
+   }
+
     if(mdpField.getText().equals(confirmerMdpField.getText())) {
         System.out.println("Mot de passe similaire");
     }

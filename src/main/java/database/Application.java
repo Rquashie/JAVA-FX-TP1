@@ -2,9 +2,9 @@ package database;
 import model.Utilisateur ;
 import repository.UtilisateurRepository;
 import appli.accueil.InscriptionController;
-import appli.accueil.* ;
-import appli.StartApplication;
+import appli.accueil.LoginController;
 import java.sql.Connection;
+
 
 import static database.Database.getConnexion;
 
@@ -16,5 +16,9 @@ public class Application {
         } else {
             System.out.println("Échec de la connexion à la base de données.");
         }
+
+        UtilisateurRepository repo = new UtilisateurRepository();
+
+
     }
 }

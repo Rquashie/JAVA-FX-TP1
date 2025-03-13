@@ -1,5 +1,6 @@
 package appli.accueil;
 
+
 import appli.StartApplication;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -8,6 +9,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import repository.UtilisateurRepository;
 
 import java.io.IOException;
 
@@ -33,7 +35,8 @@ public class LoginController {
     @FXML
     private Label emailLabel;
 
-
+    @FXML
+    UtilisateurRepository repo = new UtilisateurRepository();
     @FXML
     void verifConnexion(ActionEvent event) {
 
@@ -42,7 +45,8 @@ public class LoginController {
 
         if (email.isEmpty() || mdp.isEmpty()) {
             erreurLabel.setText("Erreur : Veuillez remplir les champs\"");
-        } else if (mdp.equals("Azerty1234") && email.equals("r.quashie@lprs.fr")) {
+        }
+       if (repo.getUtilisateurParEmail(emailField.getText())){
             System.out.println("Connexion réussi");
         }
     }
