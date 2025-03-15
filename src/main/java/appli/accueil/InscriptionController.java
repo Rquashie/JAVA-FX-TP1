@@ -9,6 +9,7 @@ import javafx.fxml.FXML;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import static java.lang.Long.toHexString;
 
@@ -43,36 +44,45 @@ UtilisateurRepository repo = new UtilisateurRepository();
 
 @FXML
 public void gestionInscription(ActionEvent actionEvent) throws IOException, SQLException {
-    String mdp = String.valueOf(mdpField.hashCode() );
-    if(adminField.isSelected()) {
-        Utilisateur utilisateur = new Utilisateur(nomField.getText(), prenomField.getText(), emailField.getText(), mdp, "amin");
-        if (!repo.getTousLesUtilisateurs().contains(utilisateur)) {
-            repo.ajouterUtilisateur(utilisateur);
-            StartApplication.changeScene("Login");
-        }
-        else{
-            erreurInscription.setText("Utilisateur déja inscrit");
-        }
-    }
-   else if(utilisateurField.isSelected()) {
-        Utilisateur utilisateur = new Utilisateur(nomField.getText(), prenomField.getText(), emailField.getText(), mdp, "utilisateur");
-        if (!repo.getTousLesUtilisateurs().contains(utilisateur)) {
-            repo.ajouterUtilisateur(utilisateur);
-        }
-        else{
-            erreurInscription.setText("Utilisateur déja inscrit");
-        }
-    }
-   else{
-       System.out.println("Veuillez choisir un bouton");
-   }
 
-    if(mdpField.getText().equals(confirmerMdpField.getText())) {
-        System.out.println("Mot de passe similaire");
+    Utilisateur utilisateurTrouve = repo.getUtilisateurParEmail(emailField.getText());
+    String nom = nomField.getText();
+    String prenom = prenomField.getText();
+    String email = emailField.getText();
+    String mdp = mdpField.getText();
+    mdp = String.valueOf(mdp.hashCode());
+
+    if (nom.isEmpty() || prenom.isEmpty() || email.isEmpty() || mdpField.getText().isEmpty()) {
+        erreurInscription.setText("Veuillez remplir tous les champs");
+        erreurInscription.setVisible(true);
+        return;
+    }
+    if (!mdpField.getText().equals(confirmerMdpField.getText())) {
+        erreurInscription.setText("Les mots de passe doivent être similaire");
+        return;
+    }
+
+    if (utilisateurTrouve == null) {
+        if (adminField.isSelected()) {
+            Utilisateur utilisateur = new Utilisateur(nomField.getText(), prenomField.getText(), emailField.getText(), mdp, "admin");
+            repo.ajouterUtilisateur(utilisateur);
+            System.out.println(utilisateur.toString());
+            StartApplication.changeScene("Login");
+        } else if (utilisateurField.isSelected()) {
+            Utilisateur utilisateur = new Utilisateur(nomField.getText(), prenomField.getText(), emailField.getText(), mdp, "utilisateur");
+            repo.ajouterUtilisateur(utilisateur);
+            System.out.println(utilisateur.toString());
+            StartApplication.changeScene("Login");
+        } else {
+            erreurInscription.setText("Veuillez choisir un rôle");
+            return;
+        }
     }
     else{
-        System.out.println("Les mots de passe doivent être similaire");
+        erreurInscription.setText("Un compte existe déja avec cette adresse");
+        return;
     }
+
 }
 public void redirectionConnexion(ActionEvent actionEvent) throws IOException {
     StartApplication.changeScene("Login");

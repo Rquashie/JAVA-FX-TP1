@@ -1,9 +1,6 @@
 package repository;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 
 import database.Database ;
@@ -33,16 +30,31 @@ public class UtilisateurRepository {
         }
     }
 
-    public String getUtilisateurParEmail(String email) {
-        String sql = "SELECT * FROM utilisateur WHERE email = ?";
+    public Utilisateur getUtilisateurParEmail(String email) {
+
+        String emailSQL = "";
+        String mdpSQL = "";
+        Utilisateur utilisateur = null ;
+
         try {
+            String sql = "SELECT * FROM utilisateur WHERE email = ?";
             PreparedStatement stmt = connexion.prepareStatement(sql);
             stmt.setString(1, email);
             ResultSet resultatRequete = stmt.executeQuery();
-            System.out.println(resultatRequete.getRow());
+            if(resultatRequete.next()) {
+               mdpSQL = resultatRequete.getString("mdp");
+               utilisateur = new Utilisateur(email, mdpSQL) ;
+            }
+            resultatRequete.close();
+            stmt.close();
+
         } catch (SQLException e) {
             System.out.println("Erreur lors de la requête  " + e.getMessage());
+            e.printStackTrace();
+
         }
+
+        return utilisateur ;
     }
 
     public ArrayList<Utilisateur> getTousLesUtilisateurs() throws SQLException {

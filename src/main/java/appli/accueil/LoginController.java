@@ -9,6 +9,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import model.Utilisateur;
 import repository.UtilisateurRepository;
 
 import java.io.IOException;
@@ -38,30 +39,40 @@ public class LoginController {
     @FXML
     UtilisateurRepository repo = new UtilisateurRepository();
     @FXML
-    void verifConnexion(ActionEvent event) {
+    public void verifConnexion(ActionEvent event) {
 
         String email = emailField.getText();
         String mdp = passwordField.getText();
 
         if (email.isEmpty() || mdp.isEmpty()) {
             erreurLabel.setText("Erreur : Veuillez remplir les champs\"");
+            return;
         }
-       if (repo.getUtilisateurParEmail(emailField.getText())){
-            System.out.println("Connexion réussi");
+        Utilisateur utilisateurTrouve = repo.getUtilisateurParEmail(email);
+
+
+        if(utilisateurTrouve != null) {
+            Utilisateur utilisateur = new Utilisateur(email, mdp);
+            System.out.println("Connexion réussi");;
         }
+        else {
+            erreurLabel.setText("Mot de passe ou identifiant incorrect");
+            return ;
+        }
+
     }
 
     @FXML
-    void mdpOublie(ActionEvent event) {
+    public void mdpOublie(ActionEvent event) {
         System.out.println("Mot de passe oublié");
     }
     @FXML
-    void redirectionInscription (ActionEvent event) throws IOException {
+    public void redirectionInscription (ActionEvent event) throws IOException {
 
         StartApplication.changeScene("Inscription");
         }
     @FXML
-    void initialize() {
+    public void initialize() {
         assert emailField != null : "fx:id=\"emailField\" was not injected: check your FXML file 'LoginView.fxml'.";
         assert emailLabel != null : "fx:id=\"emailLabel\" was not injected: check your FXML file 'LoginView.fxml'.";
         assert erreurLabel != null : "fx:id=\"erreurLabel\" was not injected: check your FXML file 'LoginView.fxml'.";

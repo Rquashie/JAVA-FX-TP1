@@ -35,7 +35,7 @@
    <AnchorPane prefHeight="200.0" prefWidth="200.0" />
    <CheckBox fx:id="adminField" mnemonicParsing="false" text="Admin" />
    <CheckBox fx:id="utilisateurField" mnemonicParsing="false" text="Utilisateur" />
-   <Label fx:id="erreurInscription" prefHeight="17.0" prefWidth="142.0" text="Label pour erreur" textFill="#ff0606" />
+   <Label fx:id="erreurInscription" prefHeight="17.0" prefWidth="251.0" text="                      Label pour erreur" textFill="#ff0606" />
    <Button fx:id="inscriptionButton" mnemonicParsing="false" onAction="#gestionInscription" text="Inscription" />
    <Button fx:id="redirectionConnexionButton" mnemonicParsing="false" onAction="#redirectionConnexion" text="Déja inscrit ?" />
    <Text strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="113.47002935409546" />
