@@ -21,7 +21,7 @@ public class UtilisateurRepository {
             stmt.setString(1, utilisateur.getNom());
             stmt.setString(2, utilisateur.getPrenom());
             stmt.setString(3, utilisateur.getEmail());
-            stmt.setString(4, utilisateur.getMdp());
+            stmt.setString(4, utilisateur.getPassword());
             stmt.setString(5, utilisateur.getRole());
             stmt.executeUpdate();
             System.out.println("Utilisateur ajouté avec succès !");
@@ -32,8 +32,10 @@ public class UtilisateurRepository {
 
     public Utilisateur getUtilisateurParEmail(String email) {
 
-        String emailSQL = "";
+        String prenomSQL = "";
+        String nomSQL = "";
         String mdpSQL = "";
+        String roleSQL = "";
         Utilisateur utilisateur = null ;
 
         try {
@@ -42,15 +44,17 @@ public class UtilisateurRepository {
             stmt.setString(1, email);
             ResultSet resultatRequete = stmt.executeQuery();
             if(resultatRequete.next()) {
-               mdpSQL = resultatRequete.getString("mdp");
-               utilisateur = new Utilisateur(email, mdpSQL) ;
+               prenomSQL =  resultatRequete.getString("prenom");
+               nomSQL =  resultatRequete.getString("nom");
+               mdpSQL =  resultatRequete.getString("mdp");
+               roleSQL = resultatRequete.getString("role");
+               utilisateur = new Utilisateur(nomSQL,prenomSQL,email,mdpSQL,roleSQL) ;
             }
             resultatRequete.close();
             stmt.close();
 
         } catch (SQLException e) {
             System.out.println("Erreur lors de la requête  " + e.getMessage());
-            e.printStackTrace();
 
         }
 

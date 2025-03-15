@@ -10,7 +10,9 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import model.Utilisateur;
+import org.mindrot.jbcrypt.BCrypt;
 import repository.UtilisateurRepository;
+import session.SessionUtilisateur ;
 
 import java.io.IOException;
 
@@ -51,16 +53,23 @@ public class LoginController {
         Utilisateur utilisateurTrouve = repo.getUtilisateurParEmail(email);
 
 
-        if(utilisateurTrouve != null) {
+        if(BCrypt.checkpw( mdp , utilisateurTrouve.getPassword())) {
             Utilisateur utilisateur = new Utilisateur(email, mdp);
-            System.out.println("Connexion réussi");;
+            System.out.println("Connexion réussi pour : "+utilisateurTrouve.getNom() +" "+utilisateurTrouve.getPrenom());;
+            SessionUtilisateur.getInstance().sauvegardeSession(utilisateur);
+            erreurLabel.setVisible(false);
+
         }
         else {
-            erreurLabel.setText("Mot de passe ou identifiant incorrect");
+            System.out.println("\"Échec de la connexion. Email ou mot de passe incorrect.");
+            erreurLabel.setText("Email ou mot de passe incorrect.");
+            erreurLabel.setVisible(true);
             return ;
         }
 
     }
+
+
 
     @FXML
     public void mdpOublie(ActionEvent event) {
@@ -83,5 +92,6 @@ public class LoginController {
         assert redirectionInscriptionButton != null : "fx:id=\"redirectionInscriptionButton\" was not injected: check your FXML file 'LoginView.fxml'.";
 
     }
+
 
     }

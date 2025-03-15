@@ -9,9 +9,8 @@ import javafx.fxml.FXML;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.ArrayList;
+import org.mindrot.jbcrypt.BCrypt;
 
-import static java.lang.Long.toHexString;
 
 public class InscriptionController {
 @FXML
@@ -50,37 +49,36 @@ public void gestionInscription(ActionEvent actionEvent) throws IOException, SQLE
     String prenom = prenomField.getText();
     String email = emailField.getText();
     String mdp = mdpField.getText();
-    mdp = String.valueOf(mdp.hashCode());
+    String mdpHache = BCrypt.hashpw(mdp, BCrypt.gensalt());
 
-    if (nom.isEmpty() || prenom.isEmpty() || email.isEmpty() || mdpField.getText().isEmpty()) {
+    if (nom.isEmpty() || prenom.isEmpty() || email.isEmpty() || mdp.isEmpty()) {
         erreurInscription.setText("Veuillez remplir tous les champs");
-        erreurInscription.setVisible(true);
         return;
     }
-    if (!mdpField.getText().equals(confirmerMdpField.getText())) {
+    if (!mdp.equals(confirmerMdpField.getText())) {
         erreurInscription.setText("Les mots de passe doivent être similaire");
         return;
     }
 
     if (utilisateurTrouve == null) {
         if (adminField.isSelected()) {
-            Utilisateur utilisateur = new Utilisateur(nomField.getText(), prenomField.getText(), emailField.getText(), mdp, "admin");
+            Utilisateur utilisateur = new Utilisateur(nomField.getText(), prenomField.getText(), emailField.getText(), mdpHache, "admin");
             repo.ajouterUtilisateur(utilisateur);
-            System.out.println(utilisateur.toString());
             StartApplication.changeScene("Login");
+
         } else if (utilisateurField.isSelected()) {
-            Utilisateur utilisateur = new Utilisateur(nomField.getText(), prenomField.getText(), emailField.getText(), mdp, "utilisateur");
+            Utilisateur utilisateur = new Utilisateur(nomField.getText(), prenomField.getText(), emailField.getText(), mdpHache, "utilisateur");
             repo.ajouterUtilisateur(utilisateur);
-            System.out.println(utilisateur.toString());
             StartApplication.changeScene("Login");
+
         } else {
             erreurInscription.setText("Veuillez choisir un rôle");
-            return;
+
         }
     }
     else{
         erreurInscription.setText("Un compte existe déja avec cette adresse");
-        return;
+
     }
 
 }

@@ -2,30 +2,30 @@ package model;
 
 public class Utilisateur {
     private int id;
-    private String nomField;
-    private String prenomField;
-   private String emailField ;
-   private String passwordField ;
+    private String nom;
+    private String prenom;
+   private String email ;
+   private String password ;
    private String role ;
 
     public Utilisateur(String email, String mdp) {
-        this.emailField = email;
-        this.passwordField = mdp;
+        this.email = email;
+        this.password = mdp;
 
     }
     public Utilisateur(String nom, String prenom, String email, String mdp,String role) {
-        this.nomField = nom;
-        this.prenomField = prenom;
-        this.emailField = email;
-        this.passwordField = mdp;
+        this.nom= nom;
+        this.prenom = prenom;
+        this.email = email;
+        this.password = mdp;
         this.role = role;
     }
     public Utilisateur(int id, String nom, String prenom, String email, String mdp,String role) {
         this.id = id;
-        this.nomField = nom;
-        this.prenomField = prenom;
-        this.emailField = email;
-        this.passwordField = mdp;
+        this.nom= nom;
+        this.prenom = prenom;
+        this.email = email;
+        this.password = mdp;
         this.role = role;
     }
 
@@ -35,31 +35,31 @@ public class Utilisateur {
         return this.id;
     }
     public String getNom() {
-        return this.nomField;
+        return this.nom;
     }
     public void setNom(String nom) {
-        this.nomField = nom;
+        this.nom = nom;
     }
     public String getPrenom() {
-        return this.prenomField;
+        return this.prenom;
     }
     public void setPrenom(String prenom) {
-        this.prenomField = prenom;
+        this.prenom = prenom;
     }
     public String getEmail() {
-        return this.emailField;
+        return this.email;
+    }
+    public String getPassword(){
+        return this.password;
     }
     public void setEmail(String email) {
-        this.emailField = email;
-    }
-    public String getMdp() {
-        return this.passwordField;
+        this.email = email;
     }
     public String getRole() {
         return this.role;
     }
 
     public String toString() {
-        return "Nom : "+this.nomField+"\nPrenom : "+this.prenomField+"\nEmail : "+this.emailField+"\nMdp : "+this.passwordField+"\nRole : "+this.role;
+        return "Nom : "+this.nom+"\nPrenom : "+this.prenom+"\nEmail : "+this.email+"\nRole : "+this.role;
     }
 }
