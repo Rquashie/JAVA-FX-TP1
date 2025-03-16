@@ -26,7 +26,7 @@ public class LoginController {
     @FXML
     private Button logButton;
     @FXML
-    private Button inscriptionButton;
+    private Button logoutButton ;
     @FXML
     private Button mdpOublieButton;
     @FXML
@@ -56,9 +56,9 @@ public class LoginController {
         if(BCrypt.checkpw( mdp , utilisateurTrouve.getPassword())) {
             Utilisateur utilisateur = new Utilisateur(email, mdp);
             System.out.println("Connexion réussi pour : "+utilisateurTrouve.getNom() +" "+utilisateurTrouve.getPrenom());;
-            SessionUtilisateur.getInstance().sauvegardeSession(utilisateur);
+            SessionUtilisateur.getInstance().sauvegardeSession(utilisateurTrouve);
             erreurLabel.setVisible(false);
-
+            MainController.main(null);
         }
         else {
             System.out.println("\"Échec de la connexion. Email ou mot de passe incorrect.");
@@ -66,9 +66,13 @@ public class LoginController {
             erreurLabel.setVisible(true);
             return ;
         }
-
     }
-
+    @FXML
+    protected void handleLogout() {
+        SessionUtilisateur.getInstance().deconnecter();
+        System.out.println("Utilisateur déconnecté.");
+        // Redirection vers la page de connexion
+    }
 
 
     @FXML
@@ -86,6 +90,7 @@ public class LoginController {
         assert emailLabel != null : "fx:id=\"emailLabel\" was not injected: check your FXML file 'LoginView.fxml'.";
         assert erreurLabel != null : "fx:id=\"erreurLabel\" was not injected: check your FXML file 'LoginView.fxml'.";
         assert logButton != null : "fx:id=\"logButton\" was not injected: check your FXML file 'LoginView.fxml'.";
+        assert logoutButton != null : "fx:id=\"logButton\" was not injected: check your FXML file 'LoginView.fxml'.";
         assert mdpOublieButton != null : "fx:id=\"mdpOublieButton\" was not injected: check your FXML file 'LoginView.fxml'.";
         assert passwordField != null : "fx:id=\"passwordField\" was not injected: check your FXML file 'LoginView.fxml'.";
         assert passwordLabel != null : "fx:id=\"passwordLabel\" was not injected: check your FXML file 'LoginView.fxml'.";

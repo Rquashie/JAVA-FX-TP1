@@ -5,6 +5,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
@@ -27,7 +28,12 @@
    <Label fx:id="erreurLabel" onDragDetected="#verifConnexion" text="Label" textFill="#d21010" />
 
     <Label />
-    <Button fx:id="logButton" onAction="#verifConnexion" text="Connexion" />
-    <Button fx:id="mdpOublieButton" onAction="#mdpOublie" text="Mot de passe oublié" />
-   <Button fx:id="redirectionInscriptionButton" mnemonicParsing="false" onAction="#redirectionInscription" text="Inscription" />
+   <Pane prefHeight="138.0" prefWidth="427.0">
+      <children>
+          <Button fx:id="logButton" layoutX="42.0" layoutY="2.0" onAction="#verifConnexion" text="Connexion" />
+         <Button fx:id="redirectionInscriptionButton" layoutX="227.0" layoutY="2.0" mnemonicParsing="false" onAction="#redirectionInscription" text="Inscription" />
+          <Button fx:id="mdpOublieButton" layoutX="22.0" layoutY="62.0" onAction="#mdpOublie" text="Mot de passe oublié" />
+         <Button fx:id="logoutButton" layoutX="227.0" layoutY="62.0" mnemonicParsing="false" onAction="#handleLogout" text="Déconnexion" />
+      </children>
+   </Pane>
 </VBox>

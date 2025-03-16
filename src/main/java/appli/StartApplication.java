@@ -5,6 +5,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import model.Utilisateur;
+import session.SessionUtilisateur;
 
 import java.io.IOException;
 
@@ -25,10 +27,12 @@ public class StartApplication extends Application {
 
     public static void main(String[] args) {
         launch();
+
     }
     public static void changeScene(String nomDuFichierFxml ) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(StartApplication.class.getResource("accueil/"+nomDuFichierFxml + "View.fxml"));
         mainScene = new Scene(fxmlLoader.load());
         mainStage.setScene(mainScene);
     }
+
 }
