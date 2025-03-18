@@ -32,10 +32,13 @@ public class UtilisateurRepository {
 
     public Utilisateur getUtilisateurParEmail(String email) {
 
+        int idSQL = 0 ;
         String prenomSQL = "";
         String nomSQL = "";
+        String emailSQL = "";
         String mdpSQL = "";
         String roleSQL = "";
+
         Utilisateur utilisateur = null ;
 
         try {
@@ -44,18 +47,19 @@ public class UtilisateurRepository {
             stmt.setString(1, email);
             ResultSet resultatRequete = stmt.executeQuery();
             if(resultatRequete.next()) {
+               idSQL = resultatRequete.getInt("id_utilisateur");
                prenomSQL =  resultatRequete.getString("prenom");
                nomSQL =  resultatRequete.getString("nom");
+               emailSQL =  resultatRequete.getString("email");
                mdpSQL =  resultatRequete.getString("mdp");
                roleSQL = resultatRequete.getString("role");
-               utilisateur = new Utilisateur(nomSQL,prenomSQL,email,mdpSQL,roleSQL) ;
+               utilisateur = new Utilisateur(idSQL,nomSQL,prenomSQL,emailSQL,mdpSQL,roleSQL) ;
             }
             resultatRequete.close();
             stmt.close();
 
         } catch (SQLException e) {
             System.out.println("Erreur lors de la requête  " + e.getMessage());
-
         }
 
         return utilisateur ;
@@ -64,18 +68,24 @@ public class UtilisateurRepository {
     public ArrayList<Utilisateur> getTousLesUtilisateurs() throws SQLException {
         String sql = "SELECT * from utilisateur";
         ArrayList<Utilisateur> utilisateurs = new ArrayList<>();
+        int id = 0;
+        String nom = "";
+        String prenom = "";
+        String email = "";
+        String mdp = "";
+        String role = "";
         Utilisateur utilisateur = null;
         try {
             PreparedStatement stmt = connexion.prepareStatement(sql);
             ResultSet resultatRequete = stmt.executeQuery(sql);
             while (resultatRequete.next()) {
-                int id = resultatRequete.getInt("id_utilisateur");
-                String nom = resultatRequete.getString("nom");
-                String prenom = resultatRequete.getString("prenom");
-                String email = resultatRequete.getString("email");
-                String mdp = resultatRequete.getString("mdp");
-                String role = resultatRequete.getString("role");
-                utilisateur = new Utilisateur(id,nom,prenom,email,mdp,role);
+                id = resultatRequete.getInt("id_utilisateur");
+                 nom = resultatRequete.getString("nom");
+                prenom = resultatRequete.getString("prenom");
+                email = resultatRequete.getString("email");
+                mdp = resultatRequete.getString("mdp");
+                role = resultatRequete.getString("role");
+                utilisateur = new Utilisateur(id,nom,prenom,email,mdp,role) ;
                 utilisateurs.add(utilisateur);
             }
         } catch (SQLException e) {

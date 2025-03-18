@@ -1,7 +1,7 @@
 package model;
 
 public class Utilisateur {
-    private int id;
+    private int id_utilisateur;
     private String nom;
     private String prenom;
    private String email ;
@@ -20,8 +20,8 @@ public class Utilisateur {
         this.password = mdp;
         this.role = role;
     }
-    public Utilisateur(int id, String nom, String prenom, String email, String mdp,String role) {
-        this.id = id;
+    public Utilisateur(int id_utilisateur, String nom, String prenom, String email, String mdp,String role) {
+        this.id_utilisateur = id_utilisateur;
         this.nom= nom;
         this.prenom = prenom;
         this.email = email;
@@ -31,8 +31,8 @@ public class Utilisateur {
 
 
 
-    public int getId() {
-        return this.id;
+    public Integer getIdUtilisateur() {
+        return this.id_utilisateur ;
     }
     public String getNom() {
         return this.nom;
@@ -60,6 +60,6 @@ public class Utilisateur {
     }
 
     public String toString() {
-        return "Nom : "+this.nom+"\nPrenom : "+this.prenom+"\nEmail : "+this.email+"\nRole : "+this.role;
+        return "id utilisateur : "+this.id_utilisateur+"\nNom : "+this.nom+"\nPrenom : "+this.prenom+"\nEmail : "+this.email+"\nRole : "+this.role;
     }
 }

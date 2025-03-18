@@ -22,26 +22,31 @@ public class TableauUserController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         String [][] colonnes = {
-                { "Id Utilisateur","idUser" },
+                { "Id Utilisateur","id_utilisateur" },
                 { "Nom","nom" },
                 { "Prénom","prenom" },
-                { "Email","mail" },
+                { "Email","email" },
                 { "Rôle","role" }
         };
 
         for ( int i = 0 ; i < colonnes.length ; i ++ ){
-            //Création de la colonne avec le titre
-            TableColumn<Utilisateur,String> maCol = new TableColumn<>(colonnes[i][0]);
-//Ligne permettant la liaison automatique de la cellule avec la propriété
-            maCol.setCellValueFactory(
-                    new PropertyValueFactory<Utilisateur,String>(colonnes[i][1]));
-            //Ajout de la colonne dans notre tableau
-            tableView.getColumns().add(maCol);
+            if (colonnes[1][0].equals("Id Utilisateur")) {
+                TableColumn<Utilisateur, Integer> maCol = new TableColumn<>(colonnes[1][0]);
+                maCol.setCellValueFactory(new PropertyValueFactory<>("id_utilisateur"));
+                tableView.getColumns().add(maCol);
+            } else {
+                TableColumn<Utilisateur, String> maCol = new TableColumn<>(colonnes[i][0]);
+                maCol.setCellValueFactory(new PropertyValueFactory<>(colonnes[i][1]));
+                tableView.getColumns().add(maCol);
+            }
         }
+
         try {
             ArrayList<Utilisateur> lesUtilisateurs = repo.getTousLesUtilisateurs();
+            System.out.println("Liste des utilisateurs : \n");
             for(Utilisateur u : lesUtilisateurs){
                 tableView.getItems().add(u);
+                System.out.println(u);
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
