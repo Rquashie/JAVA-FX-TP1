@@ -30,7 +30,7 @@ public class TableauUserController implements Initializable {
         };
 
         for ( int i = 0 ; i < colonnes.length ; i ++ ){
-            if (colonnes[1][0].equals("Id Utilisateur")) {
+            if (colonnes[i][0].equals("Id Utilisateur")) {
                 TableColumn<Utilisateur, Integer> maCol = new TableColumn<>(colonnes[1][0]);
                 maCol.setCellValueFactory(new PropertyValueFactory<>("id_utilisateur"));
                 tableView.getColumns().add(maCol);

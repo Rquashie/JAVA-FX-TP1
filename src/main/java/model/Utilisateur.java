@@ -31,7 +31,7 @@ public class Utilisateur {
 
 
 
-    public Integer getIdUtilisateur() {
+    public Integer getId_utilisateur() {
         return this.id_utilisateur ;
     }
     public String getNom() {
