@@ -4,6 +4,9 @@ package appli.accueil;
 import appli.StartApplication;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -41,7 +44,7 @@ public class LoginController {
     @FXML
     UtilisateurRepository repo = new UtilisateurRepository();
     @FXML
-    public void verifConnexion(ActionEvent event) {
+    public void verifConnexion(ActionEvent event) throws IOException {
 
         String email = emailField.getText();
         String mdp = passwordField.getText();
@@ -59,6 +62,12 @@ public class LoginController {
             SessionUtilisateur.getInstance().sauvegardeSession(utilisateurTrouve);
             erreurLabel.setVisible(false);
             MainController.main(null);
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/tableauUserView.fxml"));
+            Parent root = fxmlLoader.load();
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.show();
+
         }
         else {
             System.out.println("\"Échec de la connexion. Email ou mot de passe incorrect.");

@@ -64,11 +64,19 @@ public class UtilisateurRepository {
     public ArrayList<Utilisateur> getTousLesUtilisateurs() throws SQLException {
         String sql = "SELECT * from utilisateur";
         ArrayList<Utilisateur> utilisateurs = new ArrayList<>();
+        Utilisateur utilisateur = null;
         try {
             PreparedStatement stmt = connexion.prepareStatement(sql);
             ResultSet resultatRequete = stmt.executeQuery(sql);
             while (resultatRequete.next()) {
-                utilisateurs.add(resultatRequete.getObject(1, Utilisateur.class));
+                int id = resultatRequete.getInt("id_utilisateur");
+                String nom = resultatRequete.getString("nom");
+                String prenom = resultatRequete.getString("prenom");
+                String email = resultatRequete.getString("email");
+                String mdp = resultatRequete.getString("mdp");
+                String role = resultatRequete.getString("role");
+                utilisateur = new Utilisateur(id,nom,prenom,email,mdp,role);
+                utilisateurs.add(utilisateur);
             }
         } catch (SQLException e) {
             System.out.println("Erreur lors de la requête  " + e.getMessage());

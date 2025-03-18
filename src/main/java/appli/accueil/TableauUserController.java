@@ -6,11 +6,17 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import model.Utilisateur;
+import repository.UtilisateurRepository;
 
 import java.net.URL;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+
 public class TableauUserController implements Initializable {
+    @FXML
+    UtilisateurRepository repo = new UtilisateurRepository();
     @FXML
     private TableView<Utilisateur> tableView;
     @Override
@@ -31,6 +37,14 @@ public class TableauUserController implements Initializable {
                     new PropertyValueFactory<Utilisateur,String>(colonnes[i][1]));
             //Ajout de la colonne dans notre tableau
             tableView.getColumns().add(maCol);
+        }
+        try {
+            ArrayList<Utilisateur> lesUtilisateurs = repo.getTousLesUtilisateurs();
+            for(Utilisateur u : lesUtilisateurs){
+                tableView.getItems().add(u);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 }
