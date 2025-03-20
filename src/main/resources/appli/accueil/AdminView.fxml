@@ -7,7 +7,7 @@
 <?import javafx.scene.text.Font?>
 
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="642.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="642.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="appli.accueil.AdminController">
    <children>
       <Label layoutX="181.0" layoutY="35.0" text="Page Admin ">
          <font>
@@ -20,7 +20,7 @@
             <Font size="24.0" />
          </font>
       </Label>
-      <Button fx:id="ajouterProjetButton" layoutX="42.0" layoutY="174.0" mnemonicParsing="false" text="Ajouter un projet" />
+      <Button fx:id="ajouterProjetButton" layoutX="42.0" layoutY="174.0" mnemonicParsing="false" onAction="#redirectionProjet" text="Ajouter un projet" />
       <Button fx:id="modifierProjetButton" layoutX="39.0" layoutY="215.0" mnemonicParsing="false" text="Modifier un projet" />
       <Button fx:id="supprimerProjetButton" layoutX="39.0" layoutY="257.0" mnemonicParsing="false" text="Supprimer un projet" />
       <Label layoutX="266.0" layoutY="121.0" text="Gestion des tâches">

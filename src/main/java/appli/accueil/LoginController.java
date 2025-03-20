@@ -58,17 +58,18 @@ public class LoginController {
 
         if(BCrypt.checkpw( mdp , utilisateurTrouve.getPassword())) {
             Utilisateur utilisateur = new Utilisateur(email, mdp);
-            System.out.println("Connexion réussi pour : "+utilisateurTrouve.getNom() +" "+utilisateurTrouve.getPrenom());;
+            System.out.println("Connexion réussi pour : " + utilisateurTrouve.getNom() + " " + utilisateurTrouve.getPrenom());
+            ;
             SessionUtilisateur.getInstance().sauvegardeSession(utilisateurTrouve);
             erreurLabel.setVisible(false);
             MainController.main(null);
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/tableauUserView.fxml"));
-            Parent root = fxmlLoader.load();
-            Stage stage = new Stage();
-            stage.setScene(new Scene(root));
-            stage.show();
-
+            if (utilisateurTrouve.getRole().equals("admin")) {
+                StartApplication.changeScene("Admin");
+            } else {
+                StartApplication.changeScene("");
+            }
         }
+
         else {
             System.out.println("\"Échec de la connexion. Email ou mot de passe incorrect.");
             erreurLabel.setText("Email ou mot de passe incorrect.");

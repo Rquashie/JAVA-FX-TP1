@@ -4,7 +4,6 @@ import java.sql.*;
 import java.util.ArrayList;
 
 import database.Database ;
-import jdk.jshell.execution.Util;
 import model.Utilisateur;
 
 
@@ -16,7 +15,7 @@ public class UtilisateurRepository {
     }
 
     public void ajouterUtilisateur(Utilisateur utilisateur) {
-        String sql = "INSERT INTO utilisateur (nom, prenom, email, mdp, role) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO utilisateur (nom, prenom, email, mot_de_passe,role) VALUES (?, ?, ?, ?,?)";
         try {
             PreparedStatement stmt = connexion.prepareStatement(sql);
             stmt.setString(1, utilisateur.getNom());
@@ -52,7 +51,7 @@ public class UtilisateurRepository {
                prenomSQL =  resultatRequete.getString("prenom");
                nomSQL =  resultatRequete.getString("nom");
                emailSQL =  resultatRequete.getString("email");
-               mdpSQL =  resultatRequete.getString("mdp");
+               mdpSQL =  resultatRequete.getString("mot_de_passe");
                roleSQL = resultatRequete.getString("role");
                utilisateur = new Utilisateur(idSQL,nomSQL,prenomSQL,emailSQL,mdpSQL,roleSQL) ;
             }
@@ -84,8 +83,7 @@ public class UtilisateurRepository {
                  nom = resultatRequete.getString("nom");
                 prenom = resultatRequete.getString("prenom");
                 email = resultatRequete.getString("email");
-                mdp = resultatRequete.getString("mdp");
-                role = resultatRequete.getString("role");
+                mdp = resultatRequete.getString("mot_de_passe");
                 utilisateur = new Utilisateur(id,nom,prenom,email,mdp,role) ;
                 utilisateurs.add(utilisateur);
             }
