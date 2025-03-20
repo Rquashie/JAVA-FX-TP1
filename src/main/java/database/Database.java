@@ -8,7 +8,7 @@ public class Database {
     private static final String UTILISATEUR = "root";
     private static final String MOT_DE_PASSE = "";
     private static String getUrl() {
-        return "jdbc:mysql://" + SERVEUR + ":3307/" + NOM_BDD + "?serverTimezone=UTC";
+        return "jdbc:mysql://" + SERVEUR + ":3306/" + NOM_BDD + "?serverTimezone=UTC";
     }
     public static Connection getConnexion() {
         Connection cnx = null;
