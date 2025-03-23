@@ -13,25 +13,23 @@ public class Utilisateur {
         this.password = mdp;
 
     }
-    public Utilisateur(String nom, String prenom, String email, String mdp,String role) {
+    public Utilisateur(String nom, String prenom, String email, String mdp) {
         this.nom= nom;
         this.prenom = prenom;
         this.email = email;
         this.password = mdp;
-        this.role = role;
     }
-    public Utilisateur(int id_utilisateur, String nom, String prenom, String email, String mdp,String role) {
+    public Utilisateur(int id_utilisateur, String nom, String prenom, String email, String mdp) {
         this.id_utilisateur = id_utilisateur;
         this.nom= nom;
         this.prenom = prenom;
         this.email = email;
         this.password = mdp;
-        this.role = role;
     }
 
 
 
-    public Integer getId_utilisateur() {
+    public int getId_utilisateur() {
         return this.id_utilisateur ;
     }
     public String getNom() {

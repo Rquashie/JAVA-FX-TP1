@@ -15,14 +15,13 @@ public class UtilisateurRepository {
     }
 
     public void ajouterUtilisateur(Utilisateur utilisateur) {
-        String sql = "INSERT INTO utilisateur (nom, prenom, email, mot_de_passe,role) VALUES (?, ?, ?, ?,?)";
+        String sql = "INSERT INTO utilisateur (nom, prenom, email, mot_de_passe) VALUES (?, ?, ?,?)";
         try {
             PreparedStatement stmt = connexion.prepareStatement(sql);
             stmt.setString(1, utilisateur.getNom());
             stmt.setString(2, utilisateur.getPrenom());
             stmt.setString(3, utilisateur.getEmail());
             stmt.setString(4, utilisateur.getPassword());
-            stmt.setString(5, utilisateur.getRole());
             stmt.executeUpdate();
             System.out.println("Utilisateur ajouté avec succès !");
         } catch (SQLException e) {
@@ -37,7 +36,6 @@ public class UtilisateurRepository {
         String nomSQL = "";
         String emailSQL = "";
         String mdpSQL = "";
-        String roleSQL = "";
 
         Utilisateur utilisateur = null ;
 
@@ -52,8 +50,7 @@ public class UtilisateurRepository {
                nomSQL =  resultatRequete.getString("nom");
                emailSQL =  resultatRequete.getString("email");
                mdpSQL =  resultatRequete.getString("mot_de_passe");
-               roleSQL = resultatRequete.getString("role");
-               utilisateur = new Utilisateur(idSQL,nomSQL,prenomSQL,emailSQL,mdpSQL,roleSQL) ;
+               utilisateur = new Utilisateur(idSQL,nomSQL,prenomSQL,emailSQL,mdpSQL) ;
             }
             resultatRequete.close();
             stmt.close();
@@ -84,7 +81,7 @@ public class UtilisateurRepository {
                 prenom = resultatRequete.getString("prenom");
                 email = resultatRequete.getString("email");
                 mdp = resultatRequete.getString("mot_de_passe");
-                utilisateur = new Utilisateur(id,nom,prenom,email,mdp,role) ;
+                utilisateur = new Utilisateur(id,nom,prenom,email,mdp) ;
                 utilisateurs.add(utilisateur);
             }
         } catch (SQLException e) {
@@ -103,7 +100,7 @@ public class UtilisateurRepository {
         }
     }
     public void mettreAJourUtilisateur(Utilisateur utilisateur) {
-        String sql = "UPDATE utilisateur set nom = ? , prenom=?,email=?,mdp=?,role=? WHERE email = ?";
+        String sql = "UPDATE utilisateur set nom = ? , prenom=?,email=?,mdp=?, WHERE email = ?";
         try{
             PreparedStatement stmt = connexion.prepareStatement(sql);
             stmt.setString(1,utilisateur.getNom()) ;

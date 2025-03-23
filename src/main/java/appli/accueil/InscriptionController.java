@@ -32,10 +32,6 @@ private PasswordField mdpField ;
 @FXML
 private PasswordField confirmerMdpField ;
 @FXML
-private CheckBox adminField;
-@FXML
-private CheckBox utilisateurField;
-@FXML
 private Label erreurInscription;
 
 @FXML
@@ -55,27 +51,17 @@ public void gestionInscription(ActionEvent actionEvent) throws IOException, SQLE
         erreurInscription.setText("Veuillez remplir tous les champs");
         return;
     }
-    if (!mdp.equals(confirmerMdpField.getText())) {
+    else if (!mdp.equals(confirmerMdpField.getText())) {
         erreurInscription.setText("Les mots de passe doivent être similaire");
         return;
     }
 
     if (utilisateurTrouve == null) {
-        if (adminField.isSelected()) {
-            Utilisateur utilisateur = new Utilisateur(nomField.getText(), prenomField.getText(), emailField.getText(), mdpHache, "admin");
-            repo.ajouterUtilisateur(utilisateur);
-            StartApplication.changeScene("Login");
-
-        } else if (utilisateurField.isSelected()) {
-            Utilisateur utilisateur = new Utilisateur(nomField.getText(), prenomField.getText(), emailField.getText(), mdpHache, "utilisateur");
-            repo.ajouterUtilisateur(utilisateur);
-            StartApplication.changeScene("Login");
-
-        } else {
-            erreurInscription.setText("Veuillez choisir un rôle");
-
-        }
+        Utilisateur utilisateur = new Utilisateur(nomField.getText(), prenomField.getText(), emailField.getText(), mdpHache);
+        repo.ajouterUtilisateur(utilisateur);
+        StartApplication.changeScene("Login");
     }
+
     else{
         erreurInscription.setText("Un compte existe déja avec cette adresse");
 

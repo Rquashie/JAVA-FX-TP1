@@ -51,6 +51,7 @@ public class LoginController {
 
         if (email.isEmpty() || mdp.isEmpty()) {
             erreurLabel.setText("Erreur : Veuillez remplir les champs\"");
+            StartApplication.changeScene("Connexion");
             return;
         }
         Utilisateur utilisateurTrouve = repo.getUtilisateurParEmail(email);
@@ -63,25 +64,21 @@ public class LoginController {
             SessionUtilisateur.getInstance().sauvegardeSession(utilisateurTrouve);
             erreurLabel.setVisible(false);
             MainController.main(null);
-            if (utilisateurTrouve.getRole().equals("admin")) {
-                StartApplication.changeScene("Admin");
-            } else {
-                StartApplication.changeScene("");
-            }
+           StartApplication.changeScene("Accueil");
         }
 
         else {
             System.out.println("\"Échec de la connexion. Email ou mot de passe incorrect.");
             erreurLabel.setText("Email ou mot de passe incorrect.");
             erreurLabel.setVisible(true);
-            return ;
+            StartApplication.changeScene("Connexion");
+
         }
     }
     @FXML
     protected void handleLogout() {
         SessionUtilisateur.getInstance().deconnecter();
         System.out.println("Utilisateur déconnecté.");
-        // Redirection vers la page de connexion
     }
 
 
