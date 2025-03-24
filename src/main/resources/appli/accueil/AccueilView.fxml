@@ -16,7 +16,7 @@
       </Label>
       <Button fx:id="deconnexionButton" layoutX="520.0" layoutY="425.0" mnemonicParsing="false" onAction="#seDeconnecter" text="Deconnexion" />
       <TableView fx:id="tableView" layoutX="25.0" layoutY="149.0" onMouseClicked="#gestionListe" prefHeight="232.0" prefWidth="281.0" />
-      <Label layoutX="397.0" layoutY="141.0" text="Intitulé de la liste">
+      <Label fx:id="nomLlisteLabel" layoutX="397.0" layoutY="141.0" text="Intitulé de la liste">
          <font>
             <Font size="18.0" />
          </font>
@@ -29,6 +29,8 @@
          </font>
       </Label>
       <Button fx:id="actualiserButton" layoutX="102.0" layoutY="400.0" mnemonicParsing="false" onAction="#actualiserListe" text="Actualiser" />
-      <Button layoutX="397.0" layoutY="240.0" mnemonicParsing="false" text="Ajouter une tâche" />
+      <Button fx:id="ajouterTacheButton" layoutX="397.0" layoutY="240.0" mnemonicParsing="false" text="Ajouter une tâche" />
+      <Button fx:id="modifierTacheButton" layoutX="397.0" layoutY="279.0" mnemonicParsing="false" text="Modifier une Tâche" />
+      <Button fx:id="supprimerTacheButton" layoutX="397.0" layoutY="332.0" mnemonicParsing="false" text="Supprimer une tâche" />
    </children>
 </AnchorPane>
