@@ -18,55 +18,61 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.EventListener;
 import java.util.ResourceBundle;
 
 
 public class AccueilController implements Initializable {
 
 
-@FXML
-private Button ajouterListeButton;
-@FXML
-private TextField nomListeTextField;
-@FXML
-private Label erreurLabel;
-@FXML
-private TableView<Liste> tableView;
-@FXML
-private Button ajouterTacheButton ;
-@FXML
-private Button modifierTacheButton ;
-@FXML
-private Button supprimerTacheButton ;
-@FXML
-private Label nomListeLabel ;
+    @FXML
+    private Button ajouterListeButton;
+    @FXML
+    private TextField nomListeTextField;
+    @FXML
+    private Label erreurLabel;
+    @FXML
+    private TableView<Liste> tableView;
+    @FXML
+    private Button ajouterTacheButton;
+    @FXML
+    private Button modifierTacheButton;
+    @FXML
+    private Button supprimerTacheButton;
+    @FXML
+    private Label nomListeLabel;
 
 
-
-ListeRepository listeRepository = new ListeRepository();
-
+    ListeRepository listeRepository = new ListeRepository();
 
 
-
-public void ajouterListe(ActionEvent event) throws IOException, SQLException {
-    if (nomListeTextField.getText().isEmpty()) {
-                        erreurLabel.setText("Veuillez entrer un nom");
-    } else if (listeRepository.getListe(nomListeTextField.getText())) {
-        erreurLabel.setText("Veuillez entrer une liste différente");
-    } else {
-        Liste liste = new Liste(nomListeTextField.getText());
-        boolean ajout = listeRepository.ajouterListe(liste);
+    public void ajouterListe(ActionEvent event) throws IOException, SQLException {
+        Utilisateur utilisateur = SessionUtilisateur.getInstance().getUtilisateur();
+        ArrayList<Liste> lesListes = listeRepository.getToutesLesListes();
+        if (nomListeTextField.getText().isEmpty()) {
+            erreurLabel.setText("Veuillez entrer un nom");
+        }
+        for (Liste l : lesListes) {
+            if (l.getNom().equals(nomListeTextField.getText())) {
+                erreurLabel.setText("Veuillez entrer une liste différente");
+            }
+        }
+        Liste listeajoutee = new Liste(nomListeTextField.getText());
+        boolean ajout = listeRepository.ajouterListe(listeajoutee);
         if (ajout) {
             System.out.println("Liste ajouté");
+            System.out.println("Liste : " + listeajoutee.getId_liste());
         }
-        if (liste.getId_liste() != 0) {
-            System.out.println("Liste : " + liste.getId_liste());
-            Utilisateur utilisateur = SessionUtilisateur.getInstance().getUtilisateur();
-                        } else {
-                                System.out.println("ID inconnu");
-                        }
-                }
+    }
+public void gestionUtilisateurListe(ActionEvent event) throws SQLException {
+       Utilisateur utilisateur = SessionUtilisateur.getInstance().getUtilisateur();
+    ArrayList<Liste> lesListes = listeRepository.getToutesLesListes();
+    Liste derniereListe = lesListes.get(lesListes.size() - 1);
+       listeRepository.associerListeUtilisateur(utilisateur.getId_utilisateur(), derniereListe.getId_liste());
         }
+
+
+
 public void seDeconnecter(ActionEvent event) throws IOException {
                 SessionUtilisateur.getInstance().deconnecter();
                 StartApplication.changeScene("Connexion");
@@ -97,9 +103,6 @@ public void initialize(URL location, ResourceBundle resources) {
                         tableView.getItems().add(l);
                 }
 
-    ajouterTacheButton.setVisible(false);
-    modifierTacheButton.setVisible(false);
-    supprimerTacheButton.setVisible(false);
 }
 @FXML
 public void gestionListe() throws IOException {

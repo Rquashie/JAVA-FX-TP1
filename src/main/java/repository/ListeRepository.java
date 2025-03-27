@@ -43,29 +43,26 @@ public class ListeRepository {
         }
         return id ;
     }
-    public boolean getListe(String nom) {
-        int id = 0 ;
+    public Liste getListe(Liste liste) {
+        int idSQL = 0;
         String nomSQL = "";
 
-        String sql = "SELECT * FROM liste WHERE nom = ? ";
-        Liste liste = null;
+        String sql = "SELECT * FROM liste WHERE id = ? ";
         try {
             PreparedStatement stmt = connexion.prepareStatement(sql);
-            stmt.setString(1, nom);
+            stmt.setInt(1, liste.getId_liste());
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
-                id = rs.getInt("id_liste");
-                nom = rs.getString("nom");
-                liste = new Liste(id, nom);
-                return true;
+                idSQL = rs.getInt("id_liste");
+                nomSQL = rs.getString("nom");
+                liste = new Liste(idSQL, nomSQL);
             } else {
-                return false;
+                return null;
             }
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
-            return false;
         }
+        return liste ;
     }
     public ArrayList<Liste> getToutesLesListes() {
         String sql = "SELECT * from liste";
@@ -100,6 +97,19 @@ public class ListeRepository {
     }
         catch (SQLException e) {
         e.printStackTrace();
+            System.out.println("Erreur lors de la requête  " + e.getMessage());
+        }
+    }
+    public void creerVuesListe(Liste liste) {
+        String sql = "Create View laListe as " +
+                "Select * from liste where id_liste = ?";
+        try{
+            PreparedStatement stmt = connexion.prepareStatement(sql);
+            stmt.setInt(1,liste.getId_liste());
+            stmt.executeUpdate();
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
             System.out.println("Erreur lors de la requête  " + e.getMessage());
         }
     }
