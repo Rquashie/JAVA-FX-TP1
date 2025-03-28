@@ -15,4 +15,13 @@ public class Tache {
     public String getNom() {
         return nom;
     }
+    public int getEtat() {
+        return etat;
+    }
+    public int getRef_liste() {
+        return ref_liste;
+    }
+    public int getRef_type() {
+        return ref_type;
+    }
 }

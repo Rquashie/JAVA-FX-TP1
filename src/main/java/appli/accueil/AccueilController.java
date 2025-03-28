@@ -110,6 +110,7 @@ public void gestionListe() throws IOException {
                         if (event.getClickCount() == 2) {
                                 Liste listeSelectionnee = tableView.getSelectionModel().getSelectedItem();
                                 System.out.println("Id : " + listeSelectionnee.getId_liste() + "\nNom : " + listeSelectionnee.getNom());
+                                listeRepository.creerVuesListe(listeSelectionnee);
                                 ajouterTacheButton.setVisible(true);
                                 modifierTacheButton.setVisible(true);
                                 supprimerTacheButton.setVisible(true);
@@ -118,10 +119,12 @@ public void gestionListe() throws IOException {
                                 nomListeTextField.setVisible(false);
                                 ajouterListeButton.setVisible(false);
 
-
                         }
                 });
         }
+     public void redirectionTache(ActionEvent event) throws IOException {
+        StartApplication.changeScene("Tache");
+     }
 }
 
 

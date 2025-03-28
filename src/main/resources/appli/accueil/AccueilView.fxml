@@ -30,5 +30,8 @@
       </Label>
       <Button fx:id="actualiserButton" layoutX="102.0" layoutY="400.0" mnemonicParsing="false" onAction="#actualiserListe" text="Actualiser" />
       <Button fx:id="validerChangementsButton" layoutX="393.0" layoutY="253.0" mnemonicParsing="false" onAction="#gestionUtilisateurListe" text="Valider les changements" />
+      <Button fx:id="ajouterTacheButton" layoutX="315.0" layoutY="298.0" mnemonicParsing="false" onAction="#redirectionTache" text="Ajouter tâche" />
+      <Button fx:id="modifierTacheButton" layoutX="438.0" layoutY="298.0" mnemonicParsing="false" text="Modifier tâche" />
+      <Button fx:id="supprimerTacheButton" layoutX="580.0" layoutY="298.0" mnemonicParsing="false" text="Supprimer tâche" />
    </children>
 </AnchorPane>

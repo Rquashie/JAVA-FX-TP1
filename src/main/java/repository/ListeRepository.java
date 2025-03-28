@@ -16,11 +16,11 @@ public class ListeRepository {
     public ListeRepository() {
         this.connexion = Database.getConnexion() ;
     }
-    public boolean ajouterListe(Liste nomprojet) {
+    public boolean ajouterListe(Liste liste) {
         String sql = "INSERT INTO liste(nom) VALUES (?) ";
         try {
             PreparedStatement stmt = connexion.prepareStatement(sql);
-            stmt.setString(1, nomprojet.getNom());
+            stmt.setString(1, liste.getNom());
             stmt.executeUpdate();
             return true;
         } catch (SQLException e) {
