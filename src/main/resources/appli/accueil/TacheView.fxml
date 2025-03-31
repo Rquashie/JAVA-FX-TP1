@@ -2,29 +2,24 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="appli.accueil.TacheController">
+<AnchorPane prefHeight="198.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="appli.accueil.TacheController">
    <children>
-      <Label layoutX="64.0" layoutY="70.0" text="Type de tâche">
+      <Label layoutX="73.0" layoutY="70.0" text="Intitulé de la tâche">
          <font>
             <Font size="17.0" />
          </font>
       </Label>
-      <TextField fx:id="typeTacheTextField" layoutX="202.0" layoutY="71.0" />
-      <Button fx:id="enregistrerTypeButton" layoutX="390.0" layoutY="71.0" mnemonicParsing="false" text="Enregistrer" />
-      <Label layoutX="38.0" layoutY="115.0" text="Intitulé de la tâche">
+      <TextField fx:id="nomTacheTextField" layoutX="238.0" layoutY="70.0" onAction="#ajouterTache" />
+      <Button fx:id="validerButton" layoutX="238.0" layoutY="115.0" mnemonicParsing="false" onAction="#ajouterTache" text="Valider" />
+      <Button layoutX="322.0" layoutY="115.0" mnemonicParsing="false" text="Annuler" />
+      <Label fx:id="erreurLabel" layoutX="184.0" layoutY="21.0" text="ERREUR  LABEL" textFill="RED">
          <font>
-            <Font size="17.0" />
+            <Font size="19.0" />
          </font>
       </Label>
-      <TextField fx:id="nomTacheTextField" layoutX="202.0" layoutY="116.0" />
-      <Button fx:id="enregistreNomTacheButton" layoutX="390.0" layoutY="116.0" mnemonicParsing="false" text="Enregistrer" />
-      <Button fx:id="validerButton" layoutX="136.0" layoutY="168.0" mnemonicParsing="false" text="Valider les changements" />
-      <TableView fx:id="tableView" layoutX="70.0" layoutY="210.0" prefHeight="171.0" prefWidth="190.0" />
    </children>
 </AnchorPane>

@@ -64,7 +64,7 @@ public class LoginController {
             SessionUtilisateur.getInstance().sauvegardeSession(utilisateurTrouve);
             erreurLabel.setVisible(false);
             MainController.main(null);
-           StartApplication.changeScene("Accueil");
+           StartApplication.changeScene("Liste");
         }
 
         else {

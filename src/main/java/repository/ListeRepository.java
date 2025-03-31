@@ -14,8 +14,9 @@ public class ListeRepository {
     private Connection connexion;
 
     public ListeRepository() {
-        this.connexion = Database.getConnexion() ;
+        this.connexion = Database.getConnexion();
     }
+
     public boolean ajouterListe(Liste liste) {
         String sql = "INSERT INTO liste(nom) VALUES (?) ";
         try {
@@ -25,24 +26,10 @@ public class ListeRepository {
             return true;
         } catch (SQLException e) {
             System.out.println("Erreur lors de l'ajout de la liste : " + e.getMessage());
-            return false ;
+            return false;
         }
     }
-    public int recupererClePrimaireListe(String nom) throws SQLException {
-        String sql = "SELECT id FROM liste where nom = ? ";
-        int id = 0;
-        try {
-            PreparedStatement stmt = connexion.prepareStatement(sql);
-            stmt.setString(1, nom);
-            ResultSet rs = stmt.executeQuery();
-            if (rs.next()) {
-                id = rs.getInt("id_liste");
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return id ;
-    }
+
     public Liste getListe(Liste liste) {
         int idSQL = 0;
         String nomSQL = "";
@@ -62,8 +49,9 @@ public class ListeRepository {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return liste ;
+        return liste;
     }
+
     public ArrayList<Liste> getToutesLesListes() {
         String sql = "SELECT * from liste";
         ArrayList<Liste> listes = new ArrayList<>();
@@ -76,41 +64,76 @@ public class ListeRepository {
             while (resultatRequete.next()) {
                 id = resultatRequete.getInt("id_liste");
                 nom = resultatRequete.getString("nom");
-                liste = new Liste(id,nom) ;
+                liste = new Liste(id, nom);
                 listes.add(liste);
             }
-            if(listes.isEmpty()){
+            if (listes.isEmpty()) {
                 System.out.println("Aucune liste a été créee");
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return listes ;
+        return listes;
     }
-    public  void associerListeUtilisateur(int ref_utilisateur,int ref_liste) throws SQLException {
+
+    public void associerListeUtilisateur(int ref_utilisateur, int ref_liste) throws SQLException {
         String sql = "INSERT into utilisateur_liste(ref_utilisateur,ref_liste) VALUES (?,?)";
-        try{
+        try {
             PreparedStatement stmt = connexion.prepareStatement(sql);
             stmt.setInt(1, ref_utilisateur);
             stmt.setInt(2, ref_liste);
             stmt.executeUpdate();
-    }
-        catch (SQLException e) {
-        e.printStackTrace();
-            System.out.println("Erreur lors de la requête  " + e.getMessage());
-        }
-    }
-    public void creerVuesListe(Liste liste) {
-        String sql = "Create View laListe as " +
-                "Select * from liste where id_liste = ?";
-        try{
-            PreparedStatement stmt = connexion.prepareStatement(sql);
-            stmt.setInt(1,liste.getId_liste());
-            stmt.executeUpdate();
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
             System.out.println("Erreur lors de la requête  " + e.getMessage());
         }
+    }
+
+    public boolean creerVuesListe(Liste liste) {
+        String sql = "Create OR REPLACE View V_LISTE as " +
+                "Select * from liste where id_liste = "+liste.getId_liste();
+        try {
+            PreparedStatement stmt = connexion.prepareStatement(sql);
+            stmt.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Erreur lors de la requête  " + e.getMessage());
+            return false;
+        }
+    }
+    public boolean tableExiste(String nomTable){
+        String sql = "SELECT count(*) FROM information_schema.tables "+
+        "WHERE table_name = ? ;" ;
+        try{
+            PreparedStatement stmt = connexion.prepareStatement(sql);
+            stmt.setString(1,nomTable);
+            stmt.executeQuery() ;
+            return true ;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false ;
+        }
+    }
+
+    public Liste recupererInfoListe() throws SQLException {
+        int id = 0;
+        String nom ="";
+        Liste liste = null ;
+        String sql = "Select * from V_Liste ";
+        PreparedStatement stmt = connexion.prepareStatement(sql);
+        ResultSet resultatRequete = stmt.executeQuery();
+        if (resultatRequete.next()) {
+            id = resultatRequete.getInt("id_liste");
+            nom = resultatRequete.getString("nom");
+            liste =  new Liste(id, nom);
+        }
+        return liste;
+    }
+    public void detruireInfoListe() throws SQLException {
+        String sql = "Drop View V_LISTE";
+        PreparedStatement ps = connexion.prepareStatement(sql);
+        ps.executeUpdate();
     }
 }

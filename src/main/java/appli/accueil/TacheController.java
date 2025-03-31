@@ -1,32 +1,27 @@
 package appli.accueil;
 
+import appli.StartApplication;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import model.Liste;
 import model.Tache;
 import model.Type;
+import repository.ListeRepository;
 import repository.TacheRepository;
 
 import java.awt.event.ActionEvent;
+import java.io.IOException;
+import java.net.URL;
 import java.sql.SQLException;
+import java.util.ResourceBundle;
 
-public class TacheController {
-    @FXML
-    private Button enregistreNomTacheButton;
-
-    @FXML
-    private Button enregistrerTypeButton;
-
+public class TacheController implements Initializable {
     @FXML
     private TextField nomTacheTextField;
-
-    @FXML
-    private TableView<?> tableView;
-
-    @FXML
-    private TextField typeTacheTextField;
 
     @FXML
     private Button validerButton;
@@ -34,25 +29,29 @@ public class TacheController {
     @FXML
     private Label erreurLabel;
 
-    TacheRepository tr = new TacheRepository();
+    TacheRepository tacheRepository = new TacheRepository();
 
-
-    public void ajouterType(ActionEvent event) throws SQLException {
-        if (typeTacheTextField.getText().isEmpty()) {
-            erreurLabel.setText("Veuillez remplir tous les champs");
-        }
-        else {
-            tr.ajouterType(new Type(typeTacheTextField.getText(),"blue"));
-        }
-    }
-    public void ajouterTache(ActionEvent event) throws SQLException {
-        if (nomTacheTextField.getText().isEmpty()) {
-            erreurLabel.setText("Veuillez remplir tous les champs");
-        }
-       // else {
-            //tr.ajouterTache(new Tache(nomTacheTextField.getText(),0,));
-        }
-
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        erreurLabel.setVisible(false);
     }
 
 
+    public void ajouterTache(javafx.event.ActionEvent event) throws SQLException, IOException {
+            if(nomTacheTextField.getText().isEmpty()){
+                erreurLabel.setVisible(true);
+                erreurLabel.setText("Veuillez entrer un nom");
+            }
+            else {
+                Liste listeselectionnee = tacheRepository.recupererListe();
+                Type typeSelectionnee =  tacheRepository.recupererType();
+                Tache tache = new Tache(nomTacheTextField.getText(),0, listeselectionnee.getId_liste(), typeSelectionnee.getIdType());
+                boolean ajout = tacheRepository.ajouterTache(tache);
+                if(ajout){
+                    StartApplication.changeScene("AccueilTache");
+                    tacheRepository.detruireInfoListe();
+                    tacheRepository.detruireInfoType();
+                }
+            }
+        }
+    }

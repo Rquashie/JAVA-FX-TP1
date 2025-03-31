@@ -6,9 +6,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.MouseButton;
-import javafx.scene.input.MouseEvent;
-import jdk.jshell.execution.Util;
 import model.Liste;
 import model.Utilisateur;
 import repository.ListeRepository;
@@ -18,11 +15,10 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.EventListener;
 import java.util.ResourceBundle;
 
 
-public class AccueilController implements Initializable {
+public class ListeController implements Initializable {
 
 
     @FXML
@@ -33,14 +29,7 @@ public class AccueilController implements Initializable {
     private Label erreurLabel;
     @FXML
     private TableView<Liste> tableView;
-    @FXML
-    private Button ajouterTacheButton;
-    @FXML
-    private Button modifierTacheButton;
-    @FXML
-    private Button supprimerTacheButton;
-    @FXML
-    private Label nomListeLabel;
+
 
 
     ListeRepository listeRepository = new ListeRepository();
@@ -61,7 +50,6 @@ public class AccueilController implements Initializable {
         boolean ajout = listeRepository.ajouterListe(listeajoutee);
         if (ajout) {
             System.out.println("Liste ajouté");
-            System.out.println("Liste : " + listeajoutee.getId_liste());
         }
     }
 public void gestionUtilisateurListe(ActionEvent event) throws SQLException {
@@ -71,27 +59,28 @@ public void gestionUtilisateurListe(ActionEvent event) throws SQLException {
        listeRepository.associerListeUtilisateur(utilisateur.getId_utilisateur(), derniereListe.getId_liste());
         }
 
-
-
-public void seDeconnecter(ActionEvent event) throws IOException {
+public void seDeconnecter(ActionEvent event) throws IOException, SQLException {
                 SessionUtilisateur.getInstance().deconnecter();
-                StartApplication.changeScene("Connexion");
+                StartApplication.changeScene("Login");
+                listeRepository.detruireInfoListe();
 
         }
 public void actualiserListe(ActionEvent event) throws IOException {
-                StartApplication.changeScene("Accueil");
+                StartApplication.changeScene("Liste");
         }
 public void initialize(URL location, ResourceBundle resources) {
                 String[][] colonnes = {
                         {"Id Liste", "id_liste"},
                         {"Nom", "nom"}
+
                 };
                 for (int i = 0; i < colonnes.length; i++) {
                         if (colonnes[i][0].equals("Id Liste")) {
                                 TableColumn<Liste, Integer> maCol = new TableColumn<>(colonnes[i][0]);
                                 maCol.setCellValueFactory(new PropertyValueFactory<>("id_liste"));
                                 tableView.getColumns().add(maCol);
-                        } else {
+                        }
+                        else {
                                 TableColumn<Liste, String> maCol = new TableColumn<>(colonnes[i][1]);
                                 maCol.setCellValueFactory(new PropertyValueFactory<>(colonnes[i][1]));
                                 tableView.getColumns().add(maCol);
@@ -110,21 +99,16 @@ public void gestionListe() throws IOException {
                         if (event.getClickCount() == 2) {
                                 Liste listeSelectionnee = tableView.getSelectionModel().getSelectedItem();
                                 System.out.println("Id : " + listeSelectionnee.getId_liste() + "\nNom : " + listeSelectionnee.getNom());
-                                listeRepository.creerVuesListe(listeSelectionnee);
-                                ajouterTacheButton.setVisible(true);
-                                modifierTacheButton.setVisible(true);
-                                supprimerTacheButton.setVisible(true);
-                                nomListeLabel.setVisible(false);
-                                nomListeLabel.setManaged(false);
-                                nomListeTextField.setVisible(false);
-                                ajouterListeButton.setVisible(false);
-
+                            try {
+                                StartApplication.changeScene("AccueilTache");
+                            } catch (IOException e) {
+                               e.printStackTrace();
+                            }
+                           listeRepository.creerVuesListe(listeSelectionnee);
                         }
                 });
         }
-     public void redirectionTache(ActionEvent event) throws IOException {
-        StartApplication.changeScene("Tache");
-     }
+
 }
 
 
