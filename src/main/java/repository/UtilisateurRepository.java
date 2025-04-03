@@ -81,7 +81,7 @@ public class UtilisateurRepository {
                 prenom = resultatRequete.getString("prenom");
                 email = resultatRequete.getString("email");
                 mdp = resultatRequete.getString("mot_de_passe");
-                utilisateur = new Utilisateur(id,nom,prenom,email,mdp) ;
+                utilisateur = new Utilisateur(id,nom,prenom,email) ;
                 utilisateurs.add(utilisateur);
             }
         } catch (SQLException e) {
@@ -89,11 +89,34 @@ public class UtilisateurRepository {
         }
         return utilisateurs;
     }
+    public boolean creerVueUtilisateur(Utilisateur utilisateur){
+        String sql = "Create OR REPLACE View V_UTILISATEUR as " +
+                "Select * from utilisateur where id_utilisateur = "+utilisateur.getId_utilisateur();
+        try {
+            PreparedStatement stmt = connexion.prepareStatement(sql);
+            stmt.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Erreur lors de la requête  " + e.getMessage());
+            return false;
+        }
+    }
     public void supprimerUtilisateurParEmail(Utilisateur utilisateur) {
         String sql = "DELETE FROM utilisateur WHERE email = ?";
         try{
             PreparedStatement stmt = connexion.prepareStatement(sql);
             stmt.setString(1, utilisateur.getEmail());
+            stmt.executeUpdate() ;
+        } catch (SQLException e) {
+            System.out.println("Erreur lors de la requête  " + e.getMessage());
+        }
+    }
+    public void supprimerUtilisateurParId(String id) {
+        String sql = "DELETE FROM utilisateur WHERE id_utilisateur = ?";
+        try{
+            PreparedStatement stmt = connexion.prepareStatement(sql);
+            stmt.setString(1, id);
             stmt.executeUpdate() ;
         } catch (SQLException e) {
             System.out.println("Erreur lors de la requête  " + e.getMessage());

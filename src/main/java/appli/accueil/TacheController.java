@@ -45,8 +45,8 @@ public class TacheController implements Initializable {
             else {
                 Liste listeselectionnee = tacheRepository.recupererListe();
                 Type typeSelectionnee =  tacheRepository.recupererType();
-                Tache tache = new Tache(nomTacheTextField.getText(),0, listeselectionnee.getId_liste(), typeSelectionnee.getIdType());
-                boolean ajout = tacheRepository.ajouterTache(tache);
+                Tache tache = new Tache(nomTacheTextField.getText(),0, listeselectionnee, typeSelectionnee);
+                boolean ajout = tacheRepository.ajouterTache(tache,listeselectionnee,typeSelectionnee);
                 if(ajout){
                     StartApplication.changeScene("AccueilTache");
                     tacheRepository.detruireInfoListe();

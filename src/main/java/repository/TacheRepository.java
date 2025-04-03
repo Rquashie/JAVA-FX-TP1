@@ -18,7 +18,7 @@ public class TacheRepository {
     }
 
 
-    public boolean ajouterTache(Tache tache) throws SQLException {
+    public boolean ajouterTache(Tache tache , Liste liste , Type type) throws SQLException {
         String sql = "INSERT INTO tache(nom,etat,ref_liste,ref_type) VALUES(?,?,?,?)";
         PreparedStatement ps = connexion.prepareStatement(sql);
         try {

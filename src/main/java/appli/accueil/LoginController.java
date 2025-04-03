@@ -49,13 +49,13 @@ public class LoginController {
         String email = emailField.getText();
         String mdp = passwordField.getText();
 
+        Utilisateur utilisateurTrouve = repo.getUtilisateurParEmail(email);
+
         if (email.isEmpty() || mdp.isEmpty()) {
             erreurLabel.setText("Erreur : Veuillez remplir les champs\"");
             StartApplication.changeScene("Connexion");
             return;
         }
-        Utilisateur utilisateurTrouve = repo.getUtilisateurParEmail(email);
-
 
         if(BCrypt.checkpw( mdp , utilisateurTrouve.getPassword())) {
             Utilisateur utilisateur = new Utilisateur(email, mdp);
@@ -67,7 +67,7 @@ public class LoginController {
            StartApplication.changeScene("Liste");
         }
 
-        else {
+        else  {
             System.out.println("\"Échec de la connexion. Email ou mot de passe incorrect.");
             erreurLabel.setText("Email ou mot de passe incorrect.");
             erreurLabel.setVisible(true);

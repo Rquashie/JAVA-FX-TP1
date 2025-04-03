@@ -6,11 +6,11 @@ public class Tache {
     private int ref_liste ;
     private int ref_type ;
 
-    public Tache(String nom, int etat, int ref_liste, int ref_type) {
+    public Tache(String nom, int etat, Liste liste, Type type) {
         this.nom = nom ;
         this.etat = etat ;
-        this.ref_liste = ref_liste ;
-        this.ref_type = ref_type ;
+        this.ref_liste = liste.getId_liste() ;
+        this.ref_type = type.getIdType() ;
     }
     public String getNom() {
         return nom;

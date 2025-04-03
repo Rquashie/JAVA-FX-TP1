@@ -26,6 +26,13 @@ public class Utilisateur {
         this.email = email;
         this.password = mdp;
     }
+    public Utilisateur(int id_utilisateur, String nom, String prenom, String email) {
+        this.id_utilisateur = id_utilisateur;
+        this.nom= nom;
+        this.prenom = prenom;
+        this.email = email;
+    }
+
 
 
 

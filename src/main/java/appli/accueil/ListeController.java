@@ -65,6 +65,9 @@ public void seDeconnecter(ActionEvent event) throws IOException, SQLException {
                 listeRepository.detruireInfoListe();
 
         }
+public void redirectionProfil(ActionEvent event) throws IOException {
+        StartApplication.changeScene("Profile");
+}
 public void actualiserListe(ActionEvent event) throws IOException {
                 StartApplication.changeScene("Liste");
         }
