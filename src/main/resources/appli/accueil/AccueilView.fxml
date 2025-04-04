@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="471.0" prefWidth="694.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="appli.accueil.ListeController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="471.0" prefWidth="694.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="appli.accueil.AccueilController">
    <children>
       <Label layoutX="181.0" layoutY="35.0" text="Todo List">
          <font>
@@ -22,13 +22,13 @@
          </font>
       </Label>
       <TextField fx:id="nomListeTextField" layoutX="397.0" layoutY="185.0" onAction="#ajouterListe" prefHeight="25.0" prefWidth="134.0" />
-      <Label fx:id="erreurLabel" layoutX="422.0" layoutY="351.0" text="Erreur label" textFill="RED">
+      <Button fx:id="ajouterListeButton" layoutX="567.0" layoutY="185.0" mnemonicParsing="false" onAction="#ajouterListe" prefHeight="25.0" prefWidth="76.0" text="Enregistrer" />
+      <Label fx:id="erreurLabel" layoutX="254.0" layoutY="395.0" text="Erreur label" textFill="RED">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
       <Button fx:id="actualiserButton" layoutX="102.0" layoutY="400.0" mnemonicParsing="false" onAction="#actualiserListe" text="Actualiser" />
-      <Button fx:id="validerChangementsButton" layoutX="393.0" layoutY="253.0" mnemonicParsing="false" onAction="#ajouterListe" text="Valider les changements" />
-      <Button fx:id="gestionCompteButton" layoutX="355.0" layoutY="425.0" mnemonicParsing="false" onAction="#redirectionProfil" text="Gestion des utilisateurs" />
+      <Button fx:id="validerChangementsButton" layoutX="397.0" layoutY="223.0" mnemonicParsing="false" onAction="#gestionUtilisateurListe" text="Valider les changements" />
    </children>
 </AnchorPane>

@@ -69,23 +69,16 @@ public class ProfileController implements Initializable {
             if (event.getClickCount() == 2) {
                 Utilisateur utilisateurSelectionne = tableView.getSelectionModel().getSelectedItem();
                 System.out.println("Id : " + utilisateurSelectionne.getId_utilisateur() + "\nNom : " + utilisateurSelectionne.getNom());
-
+                ur.creerVueUtilisateur(utilisateurSelectionne);
                 try {
-                    StartApplication.changeScene("AccueilTache");
+                    StartApplication.changeScene("AccueilGestionUtilisateur");
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                ur.creerVueUtilisateur(utilisateurSelectionne);
             }
         }) ;
     }
-    @FXML
-    public void redirectionSupprimerUtilisateur() throws IOException {
-              StartApplication.changeScene("SupprimerUtilisateur");
-            }
-    public void redirectionModifierUtilisateur() throws IOException {
-        StartApplication.changeScene("ModifierUtilisateur");
-        }
+
     public void redirectionRetour() throws IOException {
         StartApplication.changeScene("Liste");
     }
