@@ -4,11 +4,13 @@ import database.Database;
 import model.Liste;
 import model.Tache;
 import model.Type;
+import model.Utilisateur;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class TacheRepository {
     private Connection connexion;
@@ -33,53 +35,44 @@ public class TacheRepository {
         }
     }
 
-    public Liste recupererListe() throws SQLException {
-        String sql = "SELECT * FROM V_LISTE ";
+    public ArrayList<Tache> getToutesLesTacheListe(Utilisateur utilisateur , Liste liste) throws SQLException {
+        String sql = "SELECT l.nom , t.nom , t.etat , u.prenom , u.nom from utilisateur u " +
+                "inner join utilisateur_liste ul on u.id_utilisateur=ul.ref_utilisateur" +
+                "inner join liste l on l.id_liste=ul.ref_liste" +
+                "inner join tache t on t.ref_liste=l.id_liste" +
+                "where id_liste = ? and id_utilisateur = ?";
+        ArrayList<Tache> lesTaches = new ArrayList<>();
         int id = 0;
-        String nom = "";
-        PreparedStatement ps = connexion.prepareStatement(sql);
-        Liste liste = null;
+        String nomListe = null;
+        String nomTache = "";
+        String nomUtilisateur = null;
+        int etat = 0;
+        Tache tache = null;
+        String prenomUtilisateur = null ;
         try {
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                id = rs.getInt("id_liste");
-                nom = rs.getString("nom");
-                liste = new Liste(id, nom);
+            PreparedStatement stmt = connexion.prepareStatement(sql);
+            ResultSet resultatRequete = stmt.executeQuery();
+            stmt.setInt(1, liste.getId_liste());
+            stmt.setInt(2, utilisateur.getId_utilisateur());
+            while (resultatRequete.next()) {
+                nomListe = liste.getNom();
+                nomTache = resultatRequete.getString("nom");
+                etat = resultatRequete.getInt("etat");
+                prenomUtilisateur = utilisateur.getPrenom();
+                nomUtilisateur = utilisateur.getNom();
+                tache = new Tache(nomListe,nomTache,etat,nomUtilisateur,prenomUtilisateur)
+                ;
+                lesTaches.add(tache);
             }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return liste;
+        return lesTaches;
     }
-    public Type recupererType() throws SQLException {
-        String sql = "SELECT * FROM V_TYPE ";
-        int id = 0;
-        String nom = "";
-        String code_couleur ="";
-        PreparedStatement ps = connexion.prepareStatement(sql);
-        Type type = null;
-        try{
-            ResultSet rs = ps.executeQuery() ;
-            if(rs.next()){
-                id = rs.getInt("id_type");
-                nom = rs.getString("nom");
-                code_couleur = rs.getString("code_couleur");
-                type = new Type(id, nom, code_couleur);
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return type;
-    }
-    public void detruireInfoListe() throws SQLException {
-        String sql = "Drop View V_LISTE";
-        PreparedStatement ps = connexion.prepareStatement(sql);
-        ps.executeUpdate();
-    }
-    public void detruireInfoType() throws SQLException {
-        String sql = "Drop View V_TYPE";
-        PreparedStatement ps = connexion.prepareStatement(sql);
-        ps.executeUpdate();
-    }
+
+
+
+
 
 }

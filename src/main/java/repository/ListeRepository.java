@@ -104,7 +104,7 @@ public class ListeRepository {
     }
     public boolean tableExiste(String nomTable){
         String sql = "SELECT count(*) FROM information_schema.tables "+
-        "WHERE table_name = ? ;" ;
+                "WHERE table_name = ? ;" ;
         try{
             PreparedStatement stmt = connexion.prepareStatement(sql);
             stmt.setString(1,nomTable);

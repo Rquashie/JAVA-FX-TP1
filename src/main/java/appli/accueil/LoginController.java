@@ -42,14 +42,14 @@ public class LoginController {
     private Label emailLabel;
 
     @FXML
-    UtilisateurRepository repo = new UtilisateurRepository();
+    UtilisateurRepository utilisateurRepository = new UtilisateurRepository();
     @FXML
     public void verifConnexion(ActionEvent event) throws IOException {
 
         String email = emailField.getText();
         String mdp = passwordField.getText();
 
-        Utilisateur utilisateurTrouve = repo.getUtilisateurParEmail(email);
+        Utilisateur utilisateurTrouve = utilisateurRepository.getUtilisateurParEmail(email);
 
         if (email.isEmpty() || mdp.isEmpty()) {
             erreurLabel.setText("Erreur : Veuillez remplir les champs\"");
@@ -64,7 +64,9 @@ public class LoginController {
             SessionUtilisateur.getInstance().sauvegardeSession(utilisateurTrouve);
             erreurLabel.setVisible(false);
             MainController.main(null);
+
            StartApplication.changeScene("Liste");
+
         }
 
         else  {

@@ -22,14 +22,9 @@ public class ProfileController implements Initializable {
     @FXML
     private TableView<Utilisateur> tableView;
 
-    @FXML
-    private Button modifierUtilisateurButton ;
 
     @FXML
-    private Button supprimerUtilisateurButton ;
-
-    @FXML
-    UtilisateurRepository ur = new UtilisateurRepository();
+    UtilisateurRepository utilisateurRepository = new UtilisateurRepository();
 
     public void initialize(URL location, ResourceBundle resources) {
         String[][] colonnes = {
@@ -53,7 +48,7 @@ public class ProfileController implements Initializable {
 
         ArrayList<Utilisateur> lesUtilisateurs= null;
         try {
-            lesUtilisateurs = ur.getTousLesUtilisateurs();
+            lesUtilisateurs = utilisateurRepository.getTousLesUtilisateurs();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -69,12 +64,13 @@ public class ProfileController implements Initializable {
             if (event.getClickCount() == 2) {
                 Utilisateur utilisateurSelectionne = tableView.getSelectionModel().getSelectedItem();
                 System.out.println("Id : " + utilisateurSelectionne.getId_utilisateur() + "\nNom : " + utilisateurSelectionne.getNom());
-                ur.creerVueUtilisateur(utilisateurSelectionne);
+                utilisateurRepository.creerVueUtilisateur(utilisateurSelectionne);
                 try {
                     StartApplication.changeScene("AccueilGestionUtilisateur");
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+                utilisateurRepository.creerVueUtilisateur(utilisateurSelectionne);
             }
         }) ;
     }

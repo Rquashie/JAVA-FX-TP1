@@ -30,5 +30,6 @@
       <Button fx:id="actualiserButton" layoutX="102.0" layoutY="400.0" mnemonicParsing="false" onAction="#actualiserListe" text="Actualiser" />
       <Button fx:id="validerChangementsButton" layoutX="393.0" layoutY="253.0" mnemonicParsing="false" onAction="#ajouterListe" text="Valider les changements" />
       <Button fx:id="gestionCompteButton" layoutX="355.0" layoutY="425.0" mnemonicParsing="false" onAction="#redirectionProfil" text="Gestion des utilisateurs" />
+      <Label fx:id="sessionLabel" layoutX="465.0" layoutY="26.0" text="session" />
    </children>
 </AnchorPane>

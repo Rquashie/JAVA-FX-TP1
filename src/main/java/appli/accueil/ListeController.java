@@ -52,66 +52,64 @@ public class ListeController implements Initializable {
             System.out.println("Liste ajouté");
         }
     }
-public void gestionUtilisateurListe(ActionEvent event) throws SQLException {
-       Utilisateur utilisateur = SessionUtilisateur.getInstance().getUtilisateur();
-    ArrayList<Liste> lesListes = listeRepository.getToutesLesListes();
-    Liste derniereListe = lesListes.get(lesListes.size() - 1);
-       listeRepository.associerListeUtilisateur(utilisateur.getId_utilisateur(), derniereListe.getId_liste());
-        }
+    public void gestionUtilisateurListe(ActionEvent event) throws SQLException {
+        Utilisateur utilisateur = SessionUtilisateur.getInstance().getUtilisateur();
+        ArrayList<Liste> lesListes = listeRepository.getToutesLesListes();
+        Liste derniereListe = lesListes.get(lesListes.size() - 1);
+        listeRepository.associerListeUtilisateur(utilisateur.getId_utilisateur(), derniereListe.getId_liste());
+    }
 
-public void seDeconnecter(ActionEvent event) throws IOException, SQLException {
-                SessionUtilisateur.getInstance().deconnecter();
-                StartApplication.changeScene("Login");
-                listeRepository.detruireInfoListe();
+    public void seDeconnecter(ActionEvent event) throws IOException, SQLException {
+        SessionUtilisateur.getInstance().deconnecter();
+        StartApplication.changeScene("Login");
+        listeRepository.detruireInfoListe();
 
-        }
-public void redirectionProfil(ActionEvent event) throws IOException {
+    }
+    public void redirectionProfil(ActionEvent event) throws IOException {
         StartApplication.changeScene("Profile");
-}
-public void actualiserListe(ActionEvent event) throws IOException {
-                StartApplication.changeScene("Liste");
-        }
-public void initialize(URL location, ResourceBundle resources) {
-                String[][] colonnes = {
-                        {"Id Liste", "id_liste"},
-                        {"Nom", "nom"}
+    }
+    public void actualiserListe(ActionEvent event) throws IOException {
+        StartApplication.changeScene("Liste");
+    }
+    public void initialize(URL location, ResourceBundle resources) {
+        String[][] colonnes = {
+                {"Id Liste", "id_liste"},
+                {"Nom", "nom"}
 
-                };
-                for (int i = 0; i < colonnes.length; i++) {
-                        if (colonnes[i][0].equals("Id Liste")) {
-                                TableColumn<Liste, Integer> maCol = new TableColumn<>(colonnes[i][0]);
-                                maCol.setCellValueFactory(new PropertyValueFactory<>("id_liste"));
-                                tableView.getColumns().add(maCol);
-                        }
-                        else {
-                                TableColumn<Liste, String> maCol = new TableColumn<>(colonnes[i][1]);
-                                maCol.setCellValueFactory(new PropertyValueFactory<>(colonnes[i][1]));
-                                tableView.getColumns().add(maCol);
-                        }
-                }
-
-                ArrayList<Liste> lesListes = listeRepository.getToutesLesListes();
-                for (Liste l : lesListes) {
-                        tableView.getItems().add(l);
-                }
-
-}
-@FXML
-public void gestionListe() throws IOException {
-                tableView.setOnMouseClicked(event -> {
-                        if (event.getClickCount() == 2) {
-                                Liste listeSelectionnee = tableView.getSelectionModel().getSelectedItem();
-                                System.out.println("Id : " + listeSelectionnee.getId_liste() + "\nNom : " + listeSelectionnee.getNom());
-                            try {
-                                StartApplication.changeScene("AccueilTache");
-                            } catch (IOException e) {
-                               e.printStackTrace();
-                            }
-                           listeRepository.creerVuesListe(listeSelectionnee);
-                        }
-                });
+        };
+        for (int i = 0; i < colonnes.length; i++) {
+            if (colonnes[i][0].equals("Id Liste")) {
+                TableColumn<Liste, Integer> maCol = new TableColumn<>(colonnes[i][0]);
+                maCol.setCellValueFactory(new PropertyValueFactory<>("id_liste"));
+                tableView.getColumns().add(maCol);
+            }
+            else {
+                TableColumn<Liste, String> maCol = new TableColumn<>(colonnes[i][1]);
+                maCol.setCellValueFactory(new PropertyValueFactory<>(colonnes[i][1]));
+                tableView.getColumns().add(maCol);
+            }
         }
 
+        ArrayList<Liste> lesListes = listeRepository.getToutesLesListes();
+        for (Liste l : lesListes) {
+            tableView.getItems().add(l);
+        }
+
+    }
+    @FXML
+    public void gestionListe() throws IOException {
+        tableView.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 2) {
+                Liste listeSelectionnee = tableView.getSelectionModel().getSelectedItem();
+                System.out.println("Id : " + listeSelectionnee.getId_liste() + "\nNom : " + listeSelectionnee.getNom());
+                try {
+                    StartApplication.changeScene("AccueilTache");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                listeRepository.creerVuesListe(listeSelectionnee);
+            }
+        });
+    }
+
 }
-
-

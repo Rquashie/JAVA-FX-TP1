@@ -12,6 +12,7 @@ import model.Tache;
 import model.Type;
 import repository.ListeRepository;
 import repository.TacheRepository;
+import repository.TypeRepository;
 
 import java.awt.event.ActionEvent;
 import java.io.IOException;
@@ -29,7 +30,16 @@ public class TacheController implements Initializable {
     @FXML
     private Label erreurLabel;
 
+    @FXML
     TacheRepository tacheRepository = new TacheRepository();
+
+    @FXML
+    TypeRepository typeRepository = new TypeRepository() ;
+
+    @FXML
+    ListeRepository listeRepository = new ListeRepository();
+
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -38,20 +48,18 @@ public class TacheController implements Initializable {
 
 
     public void ajouterTache(javafx.event.ActionEvent event) throws SQLException, IOException {
-            if(nomTacheTextField.getText().isEmpty()){
-                erreurLabel.setVisible(true);
-                erreurLabel.setText("Veuillez entrer un nom");
-            }
-            else {
-                Liste listeselectionnee = tacheRepository.recupererListe();
-                Type typeSelectionnee =  tacheRepository.recupererType();
-                Tache tache = new Tache(nomTacheTextField.getText(),0, listeselectionnee, typeSelectionnee);
-                boolean ajout = tacheRepository.ajouterTache(tache,listeselectionnee,typeSelectionnee);
-                if(ajout){
-                    StartApplication.changeScene("AccueilTache");
-                    tacheRepository.detruireInfoListe();
-                    tacheRepository.detruireInfoType();
-                }
+        if (nomTacheTextField.getText().isEmpty()) {
+            erreurLabel.setVisible(true);
+            erreurLabel.setText("Veuillez entrer un nom");
+        } else {
+            Liste listeselectionnee = listeRepository.recupererInfoListe();
+            Type typeSelectionnee = typeRepository.recupererType();
+            Tache tache = new Tache(nomTacheTextField.getText(), 0, listeselectionnee, typeSelectionnee);
+            boolean ajout = tacheRepository.ajouterTache(tache, listeselectionnee, typeSelectionnee);
+            if (ajout) {
+                StartApplication.changeScene("AccueilTache");
+                listeRepository.detruireInfoListe();
+                typeRepository.detruireInfoType();
             }
         }
-    }
+    }}

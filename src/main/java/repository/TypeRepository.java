@@ -71,5 +71,31 @@ public class TypeRepository {
         }
         return type;
     }
+    public Type recupererType() throws SQLException {
+        String sql = "SELECT * FROM V_TYPE ";
+        int id = 0;
+        String nom = "";
+        String code_couleur ="";
+        PreparedStatement ps = connexion.prepareStatement(sql);
+        Type type = null;
+        try{
+            ResultSet rs = ps.executeQuery() ;
+            if(rs.next()){
+                id = rs.getInt("id_type");
+                nom = rs.getString("nom");
+                code_couleur = rs.getString("code_couleur");
+                type = new Type(id, nom, code_couleur);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return type;
+    }
+
+    public void detruireInfoType() throws SQLException {
+        String sql = "Drop View V_TYPE";
+        PreparedStatement ps = connexion.prepareStatement(sql);
+        ps.executeUpdate();
+    }
 
 }

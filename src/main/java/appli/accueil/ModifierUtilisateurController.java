@@ -20,7 +20,7 @@ public class ModifierUtilisateurController {
     @FXML
     private TextField mdpTextField;
     @FXML
-    private TextField confirmerMdppTextField;
+    private TextField confirmerMdpTextField;
     @FXML
     private Label erreur ;
     @FXML
@@ -36,19 +36,17 @@ public class ModifierUtilisateurController {
 
         if(!nomTextField.getText().isEmpty()){
             ur.majNom(utilisateurSelectionnee,nomTextField.getText());
-            erreur.setText("Nom modifié");
         }
       if(!prenomTextField.getText().isEmpty()){
           ur.majPrenom(utilisateurSelectionnee,prenomTextField.getText());
-          erreur.setText("Prenom modifié");
       }
         if(!emailTextField.getText().isEmpty()){
             ur.majEmail(utilisateurSelectionnee,emailTextField.getText());
-            erreur.setText("email modifié");
         }
-        if(!mdpTextField.getText().isEmpty() && mdpTextField.getText().equals(confirmerMdppTextField.getText())){
+        if(!mdpTextField.getText().isEmpty() && mdpTextField.getText().equals(confirmerMdpTextField.getText())){
             ur.majMdp(utilisateurSelectionnee,mdpTextField.getText());
         }
+        StartApplication.changeScene("ModifierUtilisateur");
 
     }
     public void initialize() throws SQLException {
