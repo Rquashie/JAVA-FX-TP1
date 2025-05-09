@@ -14,18 +14,19 @@
          </font>
       </Label>
       <TextField fx:id="typeTacheTextField" layoutX="198.0" layoutY="29.0" onAction="#ajouterType" />
-      <Button fx:id="enregistreNomTacheButton" layoutX="445.0" layoutY="28.0" mnemonicParsing="false" onAction="#ajouterType" prefHeight="26.0" prefWidth="58.0" text="Valider" />
+      <Button fx:id="enregistreNomTacheButton" layoutX="442.0" layoutY="16.0" mnemonicParsing="false" onAction="#ajouterType" prefHeight="26.0" prefWidth="58.0" text="Valider" />
       <Label layoutX="59.0" layoutY="70.0" text="Couleur_affichage">
          <font>
             <Font size="17.0" />
          </font>
       </Label>
       <TextField fx:id="couleurTextField" layoutX="198.0" layoutY="71.0" onAction="#ajouterType" />
-      <Button layoutX="442.0" layoutY="71.0" mnemonicParsing="false" text="Annuler" />
+      <Button layoutX="442.0" layoutY="57.0" mnemonicParsing="false" onAction="#annuler" text="Annuler" />
       <Label fx:id="erreurLabel" layoutX="184.0" layoutY="113.0" text="Erreur Label" textFill="RED">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
+      <Button layoutX="448.0" layoutY="100.0" mnemonicParsing="false" onAction="#retour" text="Retour" />
    </children>
 </AnchorPane>

@@ -52,6 +52,14 @@ public class TypeController  implements Initializable {
             }
 
             StartApplication.changeScene("Tache");
+            typeRepository.creerVuesType(idTypeAjoutee);
         }
+    }
+    public void annuler(javafx.event.ActionEvent event) throws SQLException, IOException {
+        typeTacheTextField.setText("");
+        couleurTextField.setText("");
+    }
+    public void retour(javafx.event.ActionEvent event) throws SQLException, IOException {
+        StartApplication.changeScene("AccueilTache");
     }
 }

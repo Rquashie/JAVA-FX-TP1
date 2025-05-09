@@ -28,6 +28,7 @@ public class TacheRepository {
             ps.setInt(2, tache.getEtat());
             ps.setInt(3, tache.getRef_liste());
             ps.setInt(4, tache.getRef_type());
+            ps.executeUpdate();
             return true;
         } catch (SQLException e) {
             e.printStackTrace();
